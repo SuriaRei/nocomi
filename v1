@@ -5,39 +5,27 @@ function UILibrary:CreateWindow(title)
     screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
     local mainFrame = Instance.new("Frame")
-    mainFrame.Size = UDim2.new(0, 1159, 0, 600)
-    mainFrame.Position = UDim2.new(0.12, 0, 0.10, 0)
-    mainFrame.BackgroundTransparency = 1
+    mainFrame.Size = UDim2.new(0, 300, 0, 200)
+    mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     mainFrame.Parent = screenGui
 
-    local topBar = Instance.new("Frame")
-    topBar.Size = UDim2.new(0, 1160, 0, 45)
-    topBar.BackgroundColor3 = Color3.fromRGB(33, 29, 47)
-    topBar.Parent = mainFrame
-
     local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     titleLabel.Text = title
-    titleLabel.Size = UDim2.new(0, 200, 0, 44)
-    titleLabel.Position = UDim2.new(0.02, 0, 0, 0)
-    titleLabel.TextColor3 = Color3.new(1, 1, 1)
-    titleLabel.TextSize = 34
-    titleLabel.Font = Enum.Font.Oswald
-    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-    titleLabel.BackgroundTransparency = 1
-    titleLabel.Parent = topBar
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Parent = mainFrame
 
     return mainFrame
 end
 
-function UILibrary:CreateButton(parent, text, position, callback)
+function UILibrary:CreateButton(parent, text, callback)
     local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 200, 0, 36)
-    button.Position = position
-    button.BackgroundTransparency = 1
+    button.Size = UDim2.new(1, 0, 0, 40)
+    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
     button.Text = text
-    button.TextSize = 22
-    button.TextColor3 = Color3.new(0, 0, 0)
-    button.Font = Enum.Font.Oswald
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
     button.Parent = parent
 
     button.MouseButton1Click:Connect(function()
@@ -45,38 +33,6 @@ function UILibrary:CreateButton(parent, text, position, callback)
     end)
     
     return button
-end
-
-function UILibrary:CreateImageButton(parent, normalImage, hoverImage, position, size, callback)
-    local imageButton = Instance.new("ImageButton")
-    imageButton.Size = size
-    imageButton.Position = position
-    imageButton.BackgroundTransparency = 1
-    imageButton.Image = normalImage
-    imageButton.Parent = parent
-
-    local btnLabel = Instance.new("TextLabel")
-    btnLabel.Size = UDim2.new(0, 200, 0, 50)
-    btnLabel.Position = UDim2.new(0.29, 0, 0.08, 0)
-    btnLabel.BackgroundTransparency = 1
-    btnLabel.TextSize = 30
-    btnLabel.TextColor3 = Color3.new(1, 1, 1)
-    btnLabel.Font = Enum.Font.Oswald
-    btnLabel.Parent = imageButton
-
-    imageButton.MouseEnter:Connect(function()
-        imageButton.Image = hoverImage
-    end)
-    
-    imageButton.MouseLeave:Connect(function()
-        imageButton.Image = normalImage
-    end)
-    
-    imageButton.MouseButton1Click:Connect(function()
-        if callback then callback() end
-    end)
-
-    return imageButton
 end
 
 return UILibrary
