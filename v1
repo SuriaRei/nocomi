@@ -1,42 +1,43 @@
--- UI Library with Draggable Panel
-local UI = {}
+local UILibrary = {}
 
-function UI:CreatePanel(size, position, parent)
+function UILibrary:CreateWindow(title)
+    -- Create ScreenGui
     local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "SimpleUILibrary"
-    screenGui.Parent = parent or game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    local panel = Instance.new("Frame")
-    panel.Size = size or UDim2.new(0, 200, 0, 150)
-    panel.Position = position or UDim2.new(0.5, -100, 0.5, -75)
-    panel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    panel.BorderSizePixel = 2
-    panel.Parent = screenGui
+    -- Create Main Frame
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Size = UDim2.new(0, 300, 0, 200)
+    mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    mainFrame.Parent = screenGui
 
-    -- Draggable Feature
-    local dragInput, dragging, startPos, startInputPos
-    panel.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            startInputPos = input.Position
-            startPos = panel.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
+    -- Create Title
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    titleLabel.Text = title
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Parent = mainFrame
 
-    panel.InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - startInputPos
-            panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-                                       startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        end
-    end)
-
-    return panel
+    return mainFrame
 end
 
-return UI
+function UILibrary:CreateButton(parent, buttonText, callback)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, 0, 0, 40)
+    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    button.Text = buttonText
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Parent = parent
+
+    button.MouseButton1Click:Connect(function()
+        if callback then
+            callback()
+        end
+    end)
+
+    return button
+end
+
+return UILibrary
