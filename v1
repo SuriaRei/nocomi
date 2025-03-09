@@ -1,0 +1,82 @@
+local UILibrary = {}
+
+function UILibrary:CreateWindow(title)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Size = UDim2.new(0, 1159, 0, 600)
+    mainFrame.Position = UDim2.new(0.12, 0, 0.10, 0)
+    mainFrame.BackgroundTransparency = 1
+    mainFrame.Parent = screenGui
+
+    local topBar = Instance.new("Frame")
+    topBar.Size = UDim2.new(0, 1160, 0, 45)
+    topBar.BackgroundColor3 = Color3.fromRGB(33, 29, 47)
+    topBar.Parent = mainFrame
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Text = title
+    titleLabel.Size = UDim2.new(0, 200, 0, 44)
+    titleLabel.Position = UDim2.new(0.02, 0, 0, 0)
+    titleLabel.TextColor3 = Color3.new(1, 1, 1)
+    titleLabel.TextSize = 34
+    titleLabel.Font = Enum.Font.Oswald
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Parent = topBar
+
+    return mainFrame
+end
+
+function UILibrary:CreateButton(parent, text, position, callback)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0, 200, 0, 36)
+    button.Position = position
+    button.BackgroundTransparency = 1
+    button.Text = text
+    button.TextSize = 22
+    button.TextColor3 = Color3.new(0, 0, 0)
+    button.Font = Enum.Font.Oswald
+    button.Parent = parent
+
+    button.MouseButton1Click:Connect(function()
+        if callback then callback() end
+    end)
+    
+    return button
+end
+
+function UILibrary:CreateImageButton(parent, normalImage, hoverImage, position, size, callback)
+    local imageButton = Instance.new("ImageButton")
+    imageButton.Size = size
+    imageButton.Position = position
+    imageButton.BackgroundTransparency = 1
+    imageButton.Image = normalImage
+    imageButton.Parent = parent
+
+    local btnLabel = Instance.new("TextLabel")
+    btnLabel.Size = UDim2.new(0, 200, 0, 50)
+    btnLabel.Position = UDim2.new(0.29, 0, 0.08, 0)
+    btnLabel.BackgroundTransparency = 1
+    btnLabel.TextSize = 30
+    btnLabel.TextColor3 = Color3.new(1, 1, 1)
+    btnLabel.Font = Enum.Font.Oswald
+    btnLabel.Parent = imageButton
+
+    imageButton.MouseEnter:Connect(function()
+        imageButton.Image = hoverImage
+    end)
+    
+    imageButton.MouseLeave:Connect(function()
+        imageButton.Image = normalImage
+    end)
+    
+    imageButton.MouseButton1Click:Connect(function()
+        if callback then callback() end
+    end)
+
+    return imageButton
+end
+
+return UILibrary
